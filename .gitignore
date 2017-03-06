@@ -1,3 +1,2 @@
-.idea
-.idea/*
-*.XML
+*.idea
+*.DS_Store

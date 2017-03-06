@@ -25,7 +25,7 @@ React提供声明式API，因此在每次更新中你不需要关心具体的更
 
 当React比较(diffing)两棵树时，React首先比较两棵树的根元素。根据根元素的不同，行为也有所不同。
 
-### Elements Of Different Types
+### 元素类型不相同
 
 无论什么时候，当树的根节点类型不同时，React将会销毁原先的树并重写构建新的树。从`<a>`到`<img>`，从`<Article>`到`<Comment>`，从`<Button>`到`<div>`，这都导致重新构建。
 
@@ -45,9 +45,9 @@ React提供声明式API，因此在每次更新中你不需要关心具体的更
 
 `Counter`将会被销毁，重新赋予新的实例。
 
-### DOM Elements Of The Same Type
+### DOM元素类型相同
 
-When comparing two React DOM elements of the same type, React looks at the attributes of both, keeps the same underlying DOM node, and only updates the changed attributes. For example:
+当React比较两个React DOM元素是相同类型时，React观察两者属性，保持底层DOM节点相同，并且仅更新已经改变的属性，例如:
 
 ```xml
 <div className="before" title="stuff" />
@@ -55,31 +55,27 @@ When comparing two React DOM elements of the same type, React looks at the attri
 <div className="after" title="stuff" />
 ```
 
-By comparing these two elements, React knows to only modify the `className` on the underlying DOM node.
+通过比较两个元素，React会仅修改底层DOM节点的`className`属性。
 
-When updating `style`, React also knows to update only the properties that changed. For example:
+当更新`style`属性，React也会仅仅只更新已经改变的属性，例如:
 
 ```xml
-<div style={{'{{'}}color: 'red', fontWeight: 'bold'}} />
+<div style={{color: 'red', fontWeight: 'bold'}} />
 
-<div style={{'{{'}}color: 'green', fontWeight: 'bold'}} />
+<div style={{color: 'green', fontWeight: 'bold'}} />
 ```
 
-When converting between these two elements, React knows to only modify the `color` style, not the `fontWeight`.
+当React对两个元素进行转化的时候，仅会修改`color`，而不会修改`fontWeight`。
 
-After handling the DOM node, React then recurses on the children.
+在处理完当前DOM节点后，React会递归处理子节点。
 
-### Component Elements Of The Same Type
+### 相同类型的组件
 
-When a component updates, the instance stays the same, so that state is maintained across renders. React updates the props of the underlying component instance to match the new element, and calls `componentWillReceiveProps()` and `componentWillUpdate()` on the underlying instance.
+当一个组件更新的时候，组件实例保持不变，以便在渲染中保持state。React会更新组件实例的属性来匹配新的元素，并在元素实例上调用`componentWillReceiveProps()` and `componentWillUpdate()`。接下来，`render()`方法会被调用并且`diff`算法对上一次的结果和新的结果进行递归。
 
-Next, the `render()` method is called and the diff algorithm recurses on the previous result and the new result.
+### 子元素递归
 
-### Recursing On Children
-
-By default, when recursing on the children of a DOM node, React just iterates over both lists of children at the same time and generates a mutation whenever there's a difference.
-
-For example, when adding an element at the end of the children, converting between these two trees works well:
+当递归DOM元素的子节点时，React默认同一时刻迭代这两个子元素列表，并在有差异时生成一个变量。例如，当给子元素末尾添加一个元素，在两棵树之间转化中性能就不错:
 
 ```xml
 <ul>
@@ -94,9 +90,9 @@ For example, when adding an element at the end of the children, converting betwe
 </ul>
 ```
 
-React will match the two `<li>first</li>` trees, match the two `<li>second</li>` trees, and then insert the `<li>third</li>` tree.
+React会比较`<li>first</li>`树与`<li>second</li>`树，然后插入`<li>third</li>`树。
 
-If you implement it naively, inserting an element at the beginning has worse performance. For example, converting between these two trees works poorly:
+如果在开始处插入一个节点也是这样简单地实现，那么性能将会很差。例如，在下面两棵树的转化中性能就不佳。
 
 ```xml
 <ul>
@@ -111,11 +107,11 @@ If you implement it naively, inserting an element at the beginning has worse per
 </ul>
 ```
 
-React will mutate every child instead of realizing it can keep the `<li>Duke</li>` and `<li>Villanova</li>` subtrees intact. This inefficiency can be a problem.
+如果React改变每一个元素，而不是知道应该保持`<li>Duke</li>`和`<li>Villanova</li>`子树，那么性能将是很大的问题。
 
 ### Keys
 
-In order to solve this issue, React supports a `key` attribute. When children have keys, React uses the key to match children in the original tree with children in the subsequent tree. For example, adding a `key` to our inefficient example above can make the tree conversion efficient:
+为了解决这个问题，React支持`key`属性。当组件拥有keys时，React用它匹配原始树子节点与后续树子节点。如下所示，添加`key`属性给我们的低效率实例代码可以使得两个树的转化更加高效。
 
 ```xml
 <ul>
@@ -129,24 +125,29 @@ In order to solve this issue, React supports a `key` attribute. When children ha
   <li key="2016">Villanova</li>
 </ul>
 ```
+现在React知道拥有key属性为`2014`节点是新的。key为`2015`和`2016`的两个元素仅仅只是被移动而已。
 
-Now React knows that the element with key `'2014'` is the new one, and the elements with the keys `'2015'` and `'2016'` have just moved.
-
-In practice, finding a key is usually not hard. The element you are going to display may already have a unique ID, so the key can just come from your data:
+事实上，查找一个key属性并不困难。你所将要展示的组件一般都有唯一的ID，因此你的数据可以作为key的来源。
 
 ```js
 <li key={item.id}>{item.name}</li>
 ```
+当情况不同时，你可以添加一个新的ID属性给你的model或者部分内容的hash值来作为key。key仅仅只需要在其兄弟节点中是唯一的，并非全局唯一。
 
-When that's not the case, you can add a new ID property to your model or hash some parts of the content to generate a key. The key only has to be unique among its siblings, not globally unique.
-
-As a last resort, you can pass item's index in the array as a key. This can work well if the items are never reordered, but reorders will be slow.
+作为最后一种方案，你可以将元素的下标作为key属性。如果元素永远不会被重新排序的情况下这样也是不错的，但是如果存在重新排序，性能将会很差。
 
 ## Tradeoffs
 
-It is important to remember that the reconciliation algorithm is an implementation detail. React could rerender the whole app on every action; the end result would be the same. We are regularly refining the heuristics in order to make common use cases faster.
+在每一行为中React将会重新渲染整个应用，最终的结果可能是相同的。
 
-In the current implementation, you can express the fact that a subtree has been moved amongst its siblings, but you cannot tell that it has moved somewhere else. The algorithm will rerender that full subtree.
+It is important to remember that the reconciliation algorithm is an implementation detail.
+React could rerender the whole app on every action;
+the end result would be the same.
+We are regularly refining the heuristics in order to make common use cases faster.
+
+In the current implementation,
+you can express the fact that a subtree has been moved amongst its siblings,
+but you cannot tell that it has moved somewhere else. The algorithm will rerender that full subtree.
 
 Because React relies on heuristics, if the assumptions behind them are not met, performance will suffer.
 
