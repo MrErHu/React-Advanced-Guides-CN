@@ -147,11 +147,3 @@ React会比较`<li>first</li>`树与`<li>second</li>`树，然后插入`<li>thir
 1. 算法不会尝试匹配不同节点类型的子树。如果你发现在有类似输出的两个不同节点类型中相互切换，你可能需要将其转化成同种类型，事实上，我们没有在其中发现问题。
 
 2. keys应该是稳定的、可预测的并且是唯一的。不稳定的key(类似于`Math.random()`函数的结果)可能会产生非常多的组件实例并且DOM节点也会非必要性的重新创建。这将会造成极大的性能损失和组件内state的丢失。
-
-Because React relies on heuristics, if the assumptions behind them are not met, performance will suffer.
-
-1. The algorithm will not try to match subtrees of different component types.
-If you see yourself alternating between two component types with very similar output,
-you may want to make it the same type. In practice, we haven't found this to be an issue.
-
-2. Keys should be stable, predictable, and unique. Unstable keys (like those produced by `Math.random()`) will cause many component instances and DOM nodes to be unnecessarily recreated, which can cause performance degradation and lost state in child components.
