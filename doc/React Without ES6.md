@@ -21,9 +21,9 @@ var Greeting = React.createClass({
 ```
 除了部分特性，ES6中类的API非常类似于函数`React.createClass`
 
-## Declaring Prop Types and Default Props
+## 声明属性类型和默认属性
 
-With functions and ES6 classes, `propTypes` and `defaultProps` are defined as properties on the components themselves:
+在函数和class类中,`propTypes`和`defaultProps`被定义为组件内部的属性:
 
 ```javascript
 class Greeting extends React.Component {
@@ -39,7 +39,7 @@ Greeting.defaultProps = {
 };
 ```
 
-With `React.createClass()`, you need to define `propTypes` as a property on the passed object, and `getDefaultProps()` as a function on it:
+在`React.createClass()`函数中,你需要在所传递的对象中定义`propTypes`属性和`getDefaultProps()`方法:
 
 ```javascript
 var Greeting = React.createClass({
@@ -58,9 +58,9 @@ var Greeting = React.createClass({
 });
 ```
 
-## Setting the Initial State
+## 设置初始化状态
 
-In ES6 classes, you can define the initial state by assigning `this.state` in the constructor:
+在ES6类中，你可以在构造函数通过给`this.state`辅助定义初始状态:
 
 ```javascript
 class Counter extends React.Component {
@@ -72,7 +72,7 @@ class Counter extends React.Component {
 }
 ```
 
-With `React.createClass()`, you have to provide a separate `getInitialState` method that returns the initial state:
+在`React.createClass()`函数中，你可以使用`getInitialState`方法返回初始状态:
 
 ```javascript
 var Counter = React.createClass({
@@ -83,9 +83,9 @@ var Counter = React.createClass({
 });
 ```
 
-## Autobinding
+## 自动绑定
 
-In React components declared as ES6 classes, methods follow the same semantics as regular ES6 classes. This means that they don't automatically bind `this` to the instance. You'll have to explicitly use `.bind(this)` in the constructor:
+在以ES6 class方式声明的React组件中，方法遵循与普通ES6的class中相同的语义。也就是说方法不会自动绑定到实例中，你必须在构造函数中显式的使用`.bind(this)`:
 
 ```javascript
 class SayHello extends React.Component {
@@ -111,7 +111,7 @@ class SayHello extends React.Component {
 }
 ```
 
-With `React.createClass()`, this is not necessary because it binds all methods:
+在`React.createClass()`方式中，并不需要这么做，因为方法可以自动绑定。
 
 ```javascript
 var SayHello = React.createClass({
@@ -133,10 +133,9 @@ var SayHello = React.createClass({
 });
 ```
 
-This means writing ES6 classes comes with a little more boilerplate code for event handlers, but the upside is slightly better performance in large applications.
+这意味着在使用ES6 class方式下对于事件处理函数你需要编写更多的样本代码,但是在大型应用中具有更好的性能。
 
-If the boilerplate code is too unattractive to you, you may enable the **experimental** [Class Properties](https://babeljs.io/docs/plugins/transform-class-properties/) syntax proposal with Babel:
-
+如果你不想使用样本代码，你可以使用Babel中**实验性***的[提案](https://babeljs.io/docs/plugins/transform-class-properties/)
 
 ```javascript
 class SayHello extends React.Component {
@@ -159,28 +158,29 @@ class SayHello extends React.Component {
   }
 }
 ```
+请注意，上述语法是**实验性**的，可能将来会发生改变，或者这个提案可能不会纳入语言范畴。
 
-Please note that the syntax above is **experimental** and the syntax may change, or the proposal might not make it into the language.
+如果你想更稳妥的方法，你有一下的选择：
 
-If you'd rather play it safe, you have a few options:
-
-* Bind methods in the constructor.
-* Use arrow functions, e.g. `onClick={(e) => this.handleClick(e)}`.
-* Keep using `React.createClass()`.
+* 在构造函数中绑定方法
+* 使用箭头函数 `onClick={(e) => this.handleClick(e)}`.
+* 使用 `React.createClass()`.
 
 ## Mixins
 
->**Note:**
+>**注意:**
 >
->ES6 launched without any mixin support. Therefore, there is no support for mixins when you use React with ES6 classes.
+> ES6是不支持mixin的，因此，当你用ES6 class编写React程序时是不支持mixins的
 >
->**We also found numerous issues in codebases using mixins, [and don't recommend using them in the new code](/react/blog/2016/07/13/mixins-considered-harmful.html).**
+>**我们也在使用mixins的情况下发现了部分问题，所以我们不推荐目前使用**
 >
->This section exists only for the reference.
+>以下部分仅用来参考
 
-Sometimes very different components may share some common functionality. These are sometimes called [cross-cutting concerns](https://en.wikipedia.org/wiki/Cross-cutting_concern). [`React.createClass`](/react/docs/top-level-api.html#react.createclass) lets you use a legacy `mixins` system for that.
+有时不同的组件可能会共用部分方法，这些方法会被称为[横切关注点(cross-cutting concerns)](https://en.wikipedia.org/wiki/Cross-cutting_concern)
 
-One common use case is a component wanting to update itself on a time interval. It's easy to use `setInterval()`, but it's important to cancel your interval when you don't need it anymore to save memory. React provides [lifecycle methods](/react/docs/working-with-the-browser.html#component-lifecycle) that let you know when a component is about to be created or destroyed. Let's create a simple mixin that uses these methods to provide an easy `setInterval()` function that will automatically get cleaned up when your component is destroyed.
+[`React.createClass`](/react/docs/top-level-api.html#react.createclass) 可以允许你使用mixins。
+
+一个常见的使用场景是组件间隔一段时间自我更新。使用`setInterval()`很容易实现，但是为了节省内存空间必须在不使用时取消。React提供了[生命周期方法](/react/docs/working-with-the-browser.html#component-lifecycle),可以通知你组件创建和销毁。我们编写一个简单的mixin，执行方法可以提供`setInterval()`方法，并且在组件销毁时可以自动被清除。
 
 ```javascript
 var SetIntervalMixin = {
@@ -221,4 +221,4 @@ ReactDOM.render(
 );
 ```
 
-If a component is using multiple mixins and several mixins define the same lifecycle method (i.e. several mixins want to do some cleanup when the component is destroyed), all of the lifecycle methods are guaranteed to be called. Methods defined on mixins run in the order mixins were listed, followed by a method call on the component.
+如果一个组件使用多个mixin，不同的mixin中定义了相同的生命周期方法(例如，不容的mixin中都想要在组件销毁时做相应的清理)，这些生命周期函数都会被调用。在组件内部的生命周期方法执行完毕后，mixin中的方法将会按照mixin的顺序依次执行。
