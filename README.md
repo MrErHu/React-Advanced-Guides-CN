@@ -14,7 +14,7 @@
  　　 Advanced Guides主要分为以下十一个部分:
 
 * JSX In Depth
-* Typechecking With PropTypes
+* [Typechecking With PropTypes](https://github.com/MrErHu/React-Advanced-Guides-CN/blob/master/doc/Typechecking%20With%20PropTypes.md)
 * Refs and the DOM
 * Uncontrolled Components
 * Optimizing Performance
