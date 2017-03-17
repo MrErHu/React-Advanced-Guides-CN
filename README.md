@@ -16,7 +16,7 @@
 * JSX In Depth
 * [Typechecking With PropTypes](https://github.com/MrErHu/React-Advanced-Guides-CN/blob/master/doc/Typechecking%20With%20PropTypes.md)
 * Refs and the DOM
-* Uncontrolled Components
+* [Uncontrolled Components](https://github.com/MrErHu/React-Advanced-Guides-CN/blob/master/doc/Uncontrolled%20Components.md)
 * Optimizing Performance
 * [React Without ES6](https://github.com/MrErHu/React-Advanced-Guides-CN/blob/master/doc/React%20Without%20ES6.md)
 * [React Without JSX](https://github.com/MrErHu/React-Advanced-Guides-CN/blob/master/doc/React%20Without%20JSX.md)
