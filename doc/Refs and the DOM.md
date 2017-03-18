@@ -81,9 +81,9 @@ class CustomTextInput extends React.Component {
 }
 ```
 
-### Refs and Functional Components
+### Refs与函数式Components
 
-**You may not use the `ref` attribute on functional components** because they don't have instances:
+**你不能在函数式组件上使用`ref`**因为函数式组件不会创建实例:
 
 ```javascript{1,7}
 function MyFunctionalComponent() {
@@ -101,9 +101,9 @@ class Parent extends React.Component {
 }
 ```
 
-You should convert the component to a class if you need a ref to it, just like you do when you need lifecycle methods or state.
+如果你需要使用`ref`，你需要将组件转化成class组件，就像需要生命周期函数或者state那样。
 
-You can, however, **use the `ref` attribute inside a functional component** as long as you refer to a DOM element or a class component:
+然而你可以在函数式组件内部使用`ref`来引用一个DOM元素或者class组件。
 
 ```javascript{2,3,6,13}
 function CustomTextInput(props) {
@@ -129,14 +129,14 @@ function CustomTextInput(props) {
 }
 ```
 
-### Don't Overuse Refs
+### 不要滥用Refs
 
-Your first inclination may be to use refs to "make things happen" in your app. If this is the case, take a moment and think more critically about where state should be owned in the component hierarchy. Often, it becomes clear that the proper place to "own" that state is at a higher level in the hierarchy. See the [Lifting State Up](/react/docs/lifting-state-up.html) guide for examples of this.
+在你应用中，你可能会倾向于使用`ref`使得"事件发生"。如果这种情况下，花一点时间仔细考虑一下在组件层次结构中哪些地方需要state。通常情况下，应该在层次结构中较高级别中拥有state。有关这方面的实例参阅[提升state](https://facebook.github.io/react/docs/lifting-state-up.html)。
 
-### Legacy API: String Refs
+### 旧版API: String类型的Refs
 
-If you worked with React before, you might be familiar with an older API where the `ref` attribute is a string, like `"textInput"`, and the DOM node is accessed as `this.refs.textInput`. We advise against it because string refs have [some issues](https://github.com/facebook/react/pull/8333#issuecomment-271648615), are considered legacy, and **are likely to be removed in one of the future releases**. If you're currently using `this.refs.textInput` to access refs, we recommend the callback pattern instead.
+如果你之前使用过React，你可能了解过之前的API:string类型的`ref`属性。类似于`textInput`，可以通过`this.refs.textInput`访问DOM节点。我们不建议使用，因为string类型的`ref`存在[问题](https://github.com/facebook/react/pull/8333#issuecomment-271648615)。已经过时了，可能会在未来的版本是移除。如果你目前还在使用`this.refs.textInput`这种方式访问`refs`，我们建议用回调函数的方式代替。
 
-### Caveats
+### 注意
 
-If the `ref` callback is defined as an inline function, it will get called twice during updates, first with `null` and then again with the DOM element. This is because a new instance of the function is created with each render, so React needs to clear the old ref and set up the new one. You can avoid this by defining the `ref` callback as a bound method on the class, but note that it shouldn't matter in most cases.
+如果`ref`以内联函数的方式定义，在update期间会被调用两次，第一次参数是`null`,之后参数是DOM元素。这是因为在每次渲染中都会创建一个新的函数实例。因此，React需要清理旧的ref并且设置新的。通过将`ref`的回调函数定义成类的绑定函数的方式可以避免上述问题，但是在大多数例子中这都不是很重要。
