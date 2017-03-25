@@ -13,7 +13,7 @@
 
  　　 Advanced Guides主要分为以下十一个部分:
 
-* JSX In Depth
+* [JSX In Depth](https://github.com/MrErHu/React-Advanced-Guides-CN/blob/master/doc/JSX%20In%20Depth.md)
 * [Typechecking With PropTypes](https://github.com/MrErHu/React-Advanced-Guides-CN/blob/master/doc/Typechecking%20With%20PropTypes.md)
 * [Refs and the DOM](https://github.com/MrErHu/React-Advanced-Guides-CN/blob/master/doc/Refs%20and%20the%20DOM.md)
 * [Uncontrolled Components](https://github.com/MrErHu/React-Advanced-Guides-CN/blob/master/doc/Uncontrolled%20Components.md)
