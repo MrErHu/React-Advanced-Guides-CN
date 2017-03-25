@@ -22,7 +22,7 @@
 * [React Without JSX](https://github.com/MrErHu/React-Advanced-Guides-CN/blob/master/doc/React%20Without%20JSX.md)
 * [Reconciliation](https://github.com/MrErHu/React-Advanced-Guides-CN/blob/master/doc/Reconciliation.md)
 * Context
-* Web Components
+* [Web Components](https://github.com/MrErHu/React-Advanced-Guides-CN/blob/master/doc/Web%20Component.md)
 * Higher-Order Components
 
 ***

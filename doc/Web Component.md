@@ -17,7 +17,9 @@ class HelloMessage extends React.Component {
 > 注意:
 >
 > Web Components通常都会对外暴露一个必须的API，例如，对于一个`video` Web Component可能会暴露`play()`和`pause()`为了访问Web Component的命令式API,您需要`ref`与DOM节点直接交互。如果你使用的是第三方的Web Component，最好的解决方案是编写React组件，作为Web Component的包装器。
+>
 > 由Web Component发出的事件可能不会沿着React渲染树正确传播。
+>
 > 因此在你的React组件中，你需要手动的添加事件处理程序来处理这些事件。
 
 一个常见的困惑是Web Component使用`class`而不是`className`
