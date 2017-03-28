@@ -1,4 +1,4 @@
-# React Without ES6
+# React Without JSX
 
 对于React来说，并不一定需要使用JSX. 如果不想在构建环境下设置编译器，使用React而不使用JSX非常的方便。
 
