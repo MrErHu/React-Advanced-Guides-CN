@@ -165,9 +165,9 @@ function withSubscription(WrappedComponent, selectData) {
 
 和组件相类似，`withSubscription`和被包裹组件的联系是基于`props`的。只要为被包裹元素提供相同的属性，那么很容易将一个高阶组件组件转化成不同的高阶组件。例如，如果你想要改变数据获取的库，这将非常有用。
 
-## Don't Mutate the Original Component. Use Composition.
+## 不要改变原始组件，而是使用组合
 
-Resist the temptation to modify a component's prototype (or otherwise mutate it) inside an HOC.
+要忍住在高阶组件修改组件原型(或者修改其他)的冲动。
 
 ```js
 function logProps(InputComponent) {
