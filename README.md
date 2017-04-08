@@ -33,11 +33,9 @@
 
 ***微信***:
 
-![WeChat](http://omaqpbodr.bkt.clouddn.com/Wechat.jpeg?imageView2/3/w/200/h/200/q/75|imageslim
-)
+![WeChat](http://omaqpbodr.bkt.clouddn.com/Wechat.jpeg?imageView2/3/w/200/h/200/q/75|imageslim)
 
 ***支付宝***:
 
-![Alipay](http://omaqpbodr.bkt.clouddn.com/Alipay.jpeg?imageView2/3/w/200/h/200/q/75|imageslim
-)
+![Alipay](http://omaqpbodr.bkt.clouddn.com/Alipay.jpeg?imageView2/3/w/200/h/200/q/75|imageslim)
 

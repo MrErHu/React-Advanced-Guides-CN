@@ -20,8 +20,6 @@ React.createElement(
 
 如果不存在子节点，你可以使用自闭合格式的标签。例如:
 
-You can also use the self-closing form of the tag if there are no children. So:
-
 ```js
 <div className="sidebar" />
 ```
