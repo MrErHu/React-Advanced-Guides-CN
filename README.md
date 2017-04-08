@@ -17,7 +17,7 @@
 * [Typechecking With PropTypes](https://github.com/MrErHu/React-Advanced-Guides-CN/blob/master/doc/Typechecking%20With%20PropTypes.md)
 * [Refs and the DOM](https://github.com/MrErHu/React-Advanced-Guides-CN/blob/master/doc/Refs%20and%20the%20DOM.md)
 * [Uncontrolled Components](https://github.com/MrErHu/React-Advanced-Guides-CN/blob/master/doc/Uncontrolled%20Components.md)
-* Optimizing Performance
+* [Optimizing Performance](https://github.com/MrErHu/React-Advanced-Guides-CN/blob/master/doc/Optimizing%20Performance.md)
 * [React Without ES6](https://github.com/MrErHu/React-Advanced-Guides-CN/blob/master/doc/React%20Without%20ES6.md)
 * [React Without JSX](https://github.com/MrErHu/React-Advanced-Guides-CN/blob/master/doc/React%20Without%20JSX.md)
 * [Reconciliation](https://github.com/MrErHu/React-Advanced-Guides-CN/blob/master/doc/Reconciliation.md)
