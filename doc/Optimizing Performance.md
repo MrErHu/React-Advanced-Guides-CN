@@ -40,7 +40,7 @@ new webpack.optimize.UglifyJsPlugin()
 
 在开发模式中，你可以在支持相关功能的浏览器中使用性能工具来可视化组件mount，update和unmount的各个过程。
 
-<center><img src="/react/img/blog/react-perf-chrome-timeline.png" width="651" height="228" alt="React components in Chrome timeline" /></center>
+<center><img src="https://facebook.github.io/react/img/blog/react-perf-chrome-timeline.png" width="651" height="228" alt="React components in Chrome timeline" /></center>
 
 在Chrome操作如下:
 
@@ -78,7 +78,7 @@ shouldComponentUpdate(nextProps, nextState) {
 
 下面有一个组件子树，其中`SCU`代表`shouldComponentUpdate`函数返回结果。`vDOMEq`代表渲染的React元素是否相等。最后，圆圈内的颜色代表组件是否需要reconcile(译者注:reconcile代表React在每次需要渲染时，会先比较当前DOM内容和待渲染内容的差异， 然后再决定如何最优地更新DOM)
 
-<figure><img src="/react/img/docs/should-component-update.png" /></figure>
+<figure><img src="https://facebook.github.io/react/img/docs/should-component-update.png" /></figure>
 
 因为以C2为根节点的子树`shouldComponentUpdate`返回的是`false`,React不会尝试重新渲染C2,并且也不会尝试调用C4和C5的`shouldComponentUpdate`。
 
