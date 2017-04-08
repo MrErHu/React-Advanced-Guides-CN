@@ -23,7 +23,7 @@
 * [Reconciliation](https://github.com/MrErHu/React-Advanced-Guides-CN/blob/master/doc/Reconciliation.md)
 * [Context](https://github.com/MrErHu/React-Advanced-Guides-CN/blob/master/doc/Context.md)
 * [Web Components](https://github.com/MrErHu/React-Advanced-Guides-CN/blob/master/doc/Web%20Component.md)
-* Higher-Order Components
+* [Higher-Order Components](https://github.com/MrErHu/React-Advanced-Guides-CN/blob/master/doc/Higher%20Order%20Components.md)
 
 ***
 
