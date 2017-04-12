@@ -397,6 +397,7 @@ function ListOfTenThings() {
 ```
 反过来，如果在输出中想要渲染`false`、`true`、`null`或者`undefined`，你必须先将其[转化为字符串](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String#String_conversion):
 
+
 ```js{2}
 <div>
   My JavaScript variable is {String(myVariable)}.
