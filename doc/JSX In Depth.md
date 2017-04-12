@@ -37,10 +37,15 @@ React.createElement(
 
 ## 指定React元素类型
 
-JSX标签的开始部分决定了React元素的类型。首字母大写的标签指示JSX标签是一个React组件。这些标签会被编译成命名变量的直接引用。所以如果你使用JSX的`<Foo />`表达式，`Foo`必须在作用域中。
+JSX标签的开始部分决定了React元素的类型。
+
+首字母大写的标签指示JSX标签是一个React组件。这些标签会被编译成命名变量的直接引用。所以如果你使用JSX的`<Foo />`表达式，`Foo`必须在作用域中。
 
 ### React必须在作用域中存在
-因为JSX被编译为`React.createElement`，所以`React`库必须在代码的作用域中。例如，在下面的代码中，虽然`React`和`CustomButton`并没有在JavaScript代码中直接使用，但是必须二者都需要在代码中引用。
+
+因为JSX被编译为调用`React.createElement`的形式，所以`React`库必须在代码的作用域中。
+
+例如，在下面的代码中，虽然`React`和`CustomButton`并没有在JavaScript代码中直接使用，但是必须二者都需要在代码中引用。
 
 ```js{1,2,5}
 import React from 'react';
@@ -51,11 +56,12 @@ function WarningButton() {
   return <CustomButton color="red" />;
 }
 ```
-如果你没有打包JavaScript而是在script标签中添加了React，那么全局中已经存在`React`。
+
+如果你没有选择打包JavaScript，而是通过在script标签中添加了React，那么全局中已经存在`React`。
 
 ### 对JSX类型使用点表示法
 
-在JSX中，你可以通过点表示法引用React组件。如果仅有一个module但其中却对外提供多个React组件时，点表示法就非常的方便。
+在JSX中，你可以通过点表示法引用React组件。如果仅有一个单一模块(module),但却对外提供多个React组件时，点表示法就非常的方便。
 
 ```js{10}
 import React from 'react';
@@ -73,7 +79,7 @@ function BlueDatePicker() {
 
 ### 自定义组件必须以大写字母开头
 
-对于以小写字母开头的元素类型，其指示类似于`<div>`或者`<span>`的内置组件，会给`React.createElement`方法传递字符串`div`或者`span`。以大写字母开头的类型，类似于`<Foo />`，将会被编译成`React.createElement(Foo)`，对应于自定义组件或者在JavaScript文件中引入的组件。
+对于以小写字母开头的元素类型，其表示类似于`<div>`或者`<span>`的内置组件，会给`React.createElement`方法传递字符串`div`或者`span`。以大写字母开头的类型，类似于`<Foo />`，将会被编译成`React.createElement(Foo)`，对应于自定义组件或者在JavaScript文件中引入的组件。
 
 我们建议给组件以大写字母开头的方式命名。如果你已经有以小写字母开头的组件，需要在JSX中使用前将其赋值给以大写字母开头的变量。例如下面代码无法按照预期运行:
 
@@ -111,7 +117,7 @@ function HelloWorld() {
 
 ### 运行时决定React类型
 
-不能使用普通的表达式作为React元素类型。如果你想使用通用的表达式来表示元素类型，首先你需要将其赋值给大写的变量。这通常会出现在出现在根据不同的props渲染不同的组件：
+不能使用普通的表达式作为React元素类型。如果你想使用通用表达式来表示元素类型，首先你需要将其赋值给大写的变量。这通常会出现在出现在根据不同的props渲染不同的组件：
 
 ```js{10,11}
 import React from 'react';
@@ -184,7 +190,7 @@ function NumberDescriber(props) {
 <MyComponent message={'hello world'} />
 ```
 
-当给props传递字符串时，其值是未转义的HTML。下面两种JSX表达式是等价的：
+当给props传递字符串时，其值是未转义的HTML(HTML-unescaped)。下面两种JSX表达式是等价的：
 
 ```js
 <MyComponent message="&lt;3" />
@@ -192,7 +198,7 @@ function NumberDescriber(props) {
 <MyComponent message={'<3'} />
 ```
 
-这种行为通常是不相关的，这里所提到的只是完整性方面。
+这种行为通常讲并不重要，这里所提到的只是为了完整性。
 
 ### Props Default to "True"
 
@@ -208,7 +214,7 @@ function NumberDescriber(props) {
 
 ### 属性展开
 
-如果存在一个object的`props`并且相传入JSX,你可以使用展开符`...`传入整个props对象。下面两种组件是等价的：
+如果存在一个object类型的`props`并且想在JSX中传入,你可以使用展开符`...`传入整个props对象。下面两种组件是等价的：
 
 ```js{7}
 function App1() {
@@ -221,11 +227,11 @@ function App2() {
 }
 ```
 
-当你构建一个container时，属性展开非常有用。然而，这可能会使得你的代码非常混乱，因为这使得非常多不相关的props传递给组件，但组件并不需要。因此我们建议谨慎使用该语法。
+当你构建一个container时，属性展开非常有用。然而，这可能会使得你的代码非常混乱，因为这使得非常多不相关的props传递给组件，但组件并不需要这些props。因此我们建议谨慎使用该语法。
 
 ## JSX中的Children
 
-在开标签和闭合标签中包含的JSX表达式会被传递给一个特殊的prop:`props.children`。下面有好几种方式传递`children`
+在包括开标签和闭标签在内的JSX表示式中，标签中的内容会被传递一个特殊的props:`props.children`，下面有好几种方式传递`children`
 
 ### 字符串
 
@@ -240,7 +246,7 @@ function App2() {
 <div>This is valid HTML &amp; JSX at the same time.</div>
 ```
 
-JSX会删除每行开头和结尾的空格，并且也会删除空行和邻接标签的新行，字符串之间的空格会被压缩成一个空格，因此下面的渲染效果都是相同的：
+JSX会删除每行开头和结尾的空格，并且也会删除空行。邻接标签的空行也会被移除，字符串之间的空格会被压缩成一个空格，因此下面的渲染效果都是相同的：
 
 ```js
 <div>Hello World</div>
@@ -271,7 +277,7 @@ JSX会删除每行开头和结尾的空格，并且也会删除空行和邻接�
 </MyContainer>
 ```
 
-你可以混合不同类型的子元素，因此你可以混用字符串和JSX子元素。这是JSX与HTML另一点相似的地方，因此下面是有效的HTML和有效的JSX:
+你可以混合不同类型的子元素，因此你可以混用字符串和JSX子元素。这是JSX与HTML另一点相似的地方，因此下面是HTML和JSX均是有效的:
 
 ```html
 <div>
@@ -282,11 +288,11 @@ JSX会删除每行开头和结尾的空格，并且也会删除空行和邻接�
   </ul>
 </div>
 ```
-React组件不能多个React元素，但是单个JSX表达式可以返回多个子元素，因此如果你想要渲染多个元素，你可以像上面一样，将其包裹在`div`中
+React组件不能返回多个React元素，但是单个JSX表达式可以有多个子元素，因此如果你想要渲染多个元素，你可以像上面一样，将其包裹在`div`中
 
 ### JavaScript 表达式
 
-你可以将任何的JavaScript元素通过用`{}`包裹而作为子元素传递，下面表达式是等价的:
+通过使用`{}`包裹，你可以将任何的JavaScript元素而作为子元素传递，下面表达式是等价的:
 
 ```js
 <MyComponent>foo</MyComponent>
@@ -341,7 +347,8 @@ function ListOfTenThings() {
   );
 }
 ```
-自定义组件的子元素可以是任何类型，只要在渲染之前组件可以将其转化为React能够处理的东西即可。这种用法并不常见，但是如果你需要扩展JSX的话，则会非常有用。
+
+传递给自定义组件的子元素可以是任何类型，只要在渲染之前组件可以将其转化为React能够处理的东西即可。这种用法并不常见，但是如果你需要扩展JSX的话，则会非常有用。
 
 ### Booleans, Null和Undefined都会被忽略
 
@@ -379,7 +386,7 @@ function ListOfTenThings() {
   }
 </div>
 ```
-为了解决这个问题，你需要使得`&&`前的表达式是boolean类型：
+为了解决这个问题，你只要确保&&`前的表达式是boolean类型：
 
 ```js{2}
 <div>
@@ -388,8 +395,7 @@ function ListOfTenThings() {
   }
 </div>
 ```
-反过来，如果在输出中想要渲染`false`、`true`、`null`或者`undefined`，
-你必须先将其[转化为字符串](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String#String_conversion) first:
+反过来，如果在输出中想要渲染`false`、`true`、`null`或者`undefined`，你必须先将其[转化为字符串](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String#String_conversion):
 
 ```js{2}
 <div>
