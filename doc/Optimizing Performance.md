@@ -1,29 +1,136 @@
-# Optimizing Performance
+# 性能优化
 
-在更新UI时，React内部使用了多种技术最小化了必要的DOM操作。对于大多数应用，使用React可以达到一个更快的用户交互并且不需要额外的特定性能优化。然而，下面有几种方式能够加快你的React应用。
+在更新UI时，React内部使用了多种技术最小化必要的DOM操作。对于大多数应用，使用React不需要额外的特定性能优化的情况下，就可以达到一个更快的用户交互。然而，下面有几种方式能够加快你的React应用。
 
 ## 使用生产环境
 
-如果你在React应用中遇到性能的瓶颈，请确保你是在生产环境下测试：
+如果你在React应用中遇到性能的瓶颈，请确保你是在生产环境下测试。
 
-* 对于单文件应用，我们提供了`.min.js`版本
-* 对 Brunch，你需要在`build`命令前加`-p`参数
-* 对于 Browserify，你需要以`NODE_ENV=production`方式运行
-* 对于 Create React App，你需要按照相关说明并运行`npm run build`命令。
-* 对于 Rollup，你需要在[commonjs](https://github.com/rollup/rollup-plugin-commonjs)插件前使用[replace](https://github.com/rollup/rollup-plugin-replace)插件，使得开发先关的模块不会被引入。更详细的例子请[阅读](https://gist.github.com/Rich-Harris/cb14f4bc0670c47d00d191565be36bf0)。
+默认地，React包含众多的帮助性的警告(warning)。这些警告在开发模式中非常有用。而然它们使得React体积庞大并性能下降，因此，你需要确保你是在生产模式下部署应用。
+
+如果你不确定你部署的模式是否正确，你可以在Chrome中安装[React Developer Tools for Chrome](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi)。如果你访问的网站是React生产模式，图标背景是深色:
+
+![](https://facebook.github.io/react/img/docs/devtools-prod.png)
+
+如果你访问的网站是React开发模式，图标的背景将会是红色:
+
+![](https://facebook.github.io/react/img/docs/devtools-dev.png)
+
+正常情况下，你会在开发过程中使用开发模式，当给用户部署应用使用生产模式。
+
+### Create React App
+
+如果你的工程使用[Create React App](https://github.com/facebookincubator/create-react-app)，运行:
+
+```
+npm run build
+```
+
+
+这将会在你的工程中`build/`目录下创建生产模式的应用。
+
+记住，这是指针对于部署产品。对于普通的开发者，使用 `npm start`。
+
+### Single-File Builds
+
+我们提供了生产模式的React和React DOM的文件:
+
+```html
+<script src="https://unpkg.com/react@15/dist/react.min.js"></script>
+<script src="https://unpkg.com/react-dom@15/dist/react-dom.min.js"></script>
+```
+
+需要记住的是以`.min.js`结尾的React文件仅适用于生产模式。
+
+### Brunch
+
+如果使用的高效地Brunch构建，安装[uglify-js-brunch](https://github.com/brunch/uglify-js-brunch)插件:
+
+```
+# 使用npm
+npm install --save-dev uglify-js-brunch
+
+# 使用yarn
+yarn add --dev uglify-js-brunch
+```
+
+然后，通过给`build`命令添加`-p`来创建生产模式应用。在开发模式下不要传递`-p`标志或者使用上述插件，因为其隐藏了有用的React警告(warning)并是构建速度降低。
+
+### Browserify
+
+对于使用的高效地Browserify构建，安装下列插件:
+
+```
+# 使用npm
+npm install --save-dev bundle-collapser envify uglify-js uglifyify
+
+# 使用Yarn
+yarn add --dev bundle-collapser envify uglify-js uglifyify
+```
+
+为了创建生产模式的应用，确实你添加了下列的转化规则(顺序很重要):
+
+* [`envify`](https://github.com/hughsk/envify)确保能设置正确的构建环境。全局安装(`-g`)。
+* [`uglifyify`](https://github.com/hughsk/uglifyify)能移除开发环境引入的文件。全局安装(`-g`)。
+* [`bundle-collapser`](https://github.com/substack/bundle-collapser)插件可以用数字替换模块ID。
+* 最后，使用[`uglify-js`](https://github.com/mishoo/UglifyJS2)压缩打包结果([查看为什么](https://github.com/hughsk/uglifyify#motivationusage))
+
+例如:
+
+```
+browserify ./index.js \
+  -g [ envify --NODE_ENV production ] \
+  -g uglifyify \
+  -p bundle-collapser/plugin \
+  | uglifyjs --compress --mangle > ./bundle.js
+```
+
+>**注意:**
+>包名为`uglify-js`, 但提供名为`uglifyjs`。<br>
+>并不是排版错误
+
+### Rollup
+
+对于使用的高效地Rollupy构建，安装下列插件:
+
+```
+# 如果使用的是npm
+npm install --save-dev rollup-plugin-commonjs rollup-plugin-replace rollup-plugin-uglify
+
+# 如果使用的yarn
+yarn add --dev rollup-plugin-commonjs rollup-plugin-replace rollup-plugin-uglify
+```
+
+为了创建生产模式的应用，确实你添加了下列插件(顺序很重要):
+
+* [`replace`](https://github.com/rollup/rollup-plugin-replace) 插件确保构建正确的构建环境。
+* [`commonjs`](https://github.com/rollup/rollup-plugin-commonjs) 插件使得Rollup支持CommonJS。
+* [`uglify`](https://github.com/TrySound/rollup-plugin-uglify) 插件压缩最终打包的文件。
 
 ```js
 plugins: [
+  // ...
   require('rollup-plugin-replace')({
     'process.env.NODE_ENV': JSON.stringify('production')
   }),
   require('rollup-plugin-commonjs')(),
+  require('rollup-plugin-uglify')(),
   // ...
 ]
 ```
 
+完整的例子查看[gist](https://gist.github.com/Rich-Harris/cb14f4bc0670c47d00d191565be36bf0)
 
-* 对于 Webpack, 在你的生产环节配置中添加下面的插件:
+记住你仅需要在生产模式下使用，你不应该在开发模式下使用`uglify`或`replace`插件，因为它隐藏了有用的React警告并使得构建速度变慢。
+
+### Webpack
+
+>**注意:**
+>
+>如果你使用的是Create React App, 查看[这个例子](#create-react-app).<br>
+>这个小节针对于你直接配置Webpack
+
+对于使用最高效地Rollupy构建，确保在生产配置下添加下面插件:
 
 ```js
 new webpack.DefinePlugin({
@@ -34,11 +141,13 @@ new webpack.DefinePlugin({
 new webpack.optimize.UglifyJsPlugin()
 ```
 
-开发版本中包含额外的警告，这对开发应用很有帮助，但是由于额外的日志记录会相应地降低性能。
+更多的信息可以了解[Webpack文档](https://webpack.js.org/guides/production-build/)
+
+记住你仅需要在生产模式下使用。你不应该在开发模式下使用`UglifyJsPlugin`或`DefinePlugin`插件，因为它隐藏了有用的React警告并使得构建速度变慢。
 
 ## 使用Chrome Timeline分析组件性能
 
-在开发模式中，你可以在支持相关功能的浏览器中使用性能工具来可视化组件mount，update和unmount的各个过程。
+在开发模式中，你可以在支持相关功能的浏览器中使用性能工具来可视化组件安装(mount)，更新(update)和卸载(unmount)的各个过程。例如:
 
 <center><img src="https://facebook.github.io/react/img/blog/react-perf-chrome-timeline.png" width="651" height="228" alt="React components in Chrome timeline" /></center>
 
@@ -60,7 +169,7 @@ new webpack.optimize.UglifyJsPlugin()
 
 ## 避免Reconciliation
 
-React创建和维护了渲染UI的内部状态。其包括了组件返回的React元素。这些内部状态使得React只有在必要的情况下才会创建DOM节点和访问存在DOM节点，因为对JavaScript对象的操作是比DOM操作更快。这被称为"虚拟DOM"，React Native的基于上述原理。
+React创建和维护了渲染UI的内部状态。其包括了组件返回的React元素。这些内部状态使得React只有在必要的情况下才会创建DOM节点和访问存在DOM节点，因为对JavaScript对象的操作是比DOM操作更快。这被称为"虚拟DOM"，React Native也基于上述原理。
 
 当组件的`props`和`state`更新时,React通过比较新返回的元素和之前渲染的元素来决定是否有必要更新DOM元素。如果二者不相等，则更新DOM元素。
 
