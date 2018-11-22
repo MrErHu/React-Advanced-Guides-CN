@@ -117,7 +117,7 @@ function HelloWorld() {
 
 ### 运行时决定React类型
 
-不能使用普通的表达式作为React元素类型。如果你想使用通用表达式来表示元素类型，首先你需要将其赋值给大写的变量。这通常会出现在出现在根据不同的props渲染不同的组件：
+不能使用普通的表达式作为React元素类型。如果你想使用通用表达式来表示元素类型，首先你需要将其赋值给大写的变量。这通常会出现在根据不同的props渲染不同的组件：
 
 ```js{10,11}
 import React from 'react';
@@ -377,8 +377,7 @@ function ListOfTenThings() {
 </div>
 ```
 
-需要注意的是，React仍然提供了["falsy"值](https://developer.mozilla.org/en-US/docs/Glossary/Falsy),例如数值`0`，仍然会被React渲染。例如：你可能会认为当`props.messages`为空数组时，将会渲染`0`，但实际并不是这样：
-
+需要注意的是，React仍然提供了["falsy"值](https://developer.mozilla.org/en-US/docs/Glossary/Falsy),例如数值`0`，仍然会被React渲染。例如：下面这个例子将不会表现为你所预期的那样（为空数组时不渲染组件），因为当`props.messages`为空数组时，将会渲染`0`
 ```js{2}
 <div>
   {props.messages.length &&
