@@ -1,6 +1,6 @@
 # Typechecking With PropTypes
 
-随着应用规模的提升，你可以通过类型检测捕捉更多的bug。对于部分应用，你可能需要需要使用类似于[Flow](https://flowtype.org/)或者[TypeScript](https://www.typescriptlang.org/)的JavaScript扩展来对你整个应用类型进行类型检测。但即使你不使用这些，React内置了类型检测的功能。要在组件中进行类型检测，你可以赋值`propTypes`属性。
+随着应用规模的提升，你可以通过类型检测捕捉更多的bug。对于部分应用，你可能需要使用类似于[Flow](https://flowtype.org/)或者[TypeScript](https://www.typescriptlang.org/)的JavaScript扩展来对你整个应用类型进行类型检测。但即使你不使用这些，React内置了类型检测的功能。要在组件中进行类型检测，你可以赋值`propTypes`属性。
 
 ```javascript
 class Greeting extends React.Component {
